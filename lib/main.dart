@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tripler/pe1.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,9 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      home: Scaffold(
-        body: Container(),
-      ),
+      home: Scaffold(body: Page1()),
     );
   }
 }
