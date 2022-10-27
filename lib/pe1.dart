@@ -14,6 +14,38 @@ class _Page1State extends State<Page1> {
     super.dispose();
   }
 
+  Widget buildPage({
+    Color color,
+    String urlImage,
+    String title,
+    String subtitle,
+  }) =>
+      Container(
+          color: color,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                urlImage,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 64),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.teal.shade700,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(subtitle),
+              )
+            ],
+          ));
+
   @override
   Widget build(BuildContext context) {
     final _h = MediaQuery.of(context).size.height;
@@ -27,10 +59,11 @@ class _Page1State extends State<Page1> {
         child: PageView(
           controller: controller,
           children: [
-            Container(
-              color: Colors.red,
-              child: const Center(child: Text("Page 1")),
-            ),
+            buildPage(
+                color: Colors.green.shade100,
+                urlImage: 'assets/r1.png',
+                title: "REDUCE",
+                subtitle: 'subtitle'),
             Container(
               color: Colors.blue,
               child: const Center(child: Text("Page 2")),
