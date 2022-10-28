@@ -25,24 +25,19 @@ class _Page1State extends State<Page1> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                urlImage,
-                fit: BoxFit.contain,
-              ),
+              Image.asset(urlImage, fit: BoxFit.contain),
               const SizedBox(height: 64),
               Text(
                 title,
                 style: TextStyle(
-                  color: Colors.teal.shade700,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                    color: Colors.teal.shade700,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(subtitle),
-              )
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(subtitle))
             ],
           ));
 
@@ -64,14 +59,16 @@ class _Page1State extends State<Page1> {
                 urlImage: 'assets/r1.png',
                 title: "REDUCE",
                 subtitle: 'subtitle'),
-            Container(
-              color: Colors.blue,
-              child: const Center(child: Text("Page 2")),
-            ),
-            Container(
-              color: Color(0xFF02b55d),
-              child: const Center(child: Text("Page 3")),
-            ),
+            buildPage(
+                color: Colors.green.shade100,
+                urlImage: 'assets/r2.png',
+                title: "REUSE",
+                subtitle: 'subtitle'),
+            buildPage(
+                color: Colors.green.shade100,
+                urlImage: 'assets/r3.png',
+                title: "RECYCLE",
+                subtitle: 'subtitle'),
           ],
         ),
       ),
