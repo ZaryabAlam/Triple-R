@@ -25,7 +25,13 @@ class _Page1State extends State<Page1> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(urlImage, fit: BoxFit.contain),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                width: MediaQuery.of(context).size.width * 0.8,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(urlImage), fit: BoxFit.contain)),
+              ),
               const SizedBox(height: 64),
               Text(
                 title,
@@ -46,61 +52,75 @@ class _Page1State extends State<Page1> {
     final _h = MediaQuery.of(context).size.height;
     final _w = MediaQuery.of(context).size.width;
 
+    BottomSheetThemeData(backgroundColor: Colors.black54);
     return Scaffold(
       body: Container(
 //////////////////////// Screens ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
-        padding: const EdgeInsets.only(bottom: 70),
+
         child: PageView(
           controller: controller,
           children: [
             buildPage(
-                color: Colors.green.shade100,
-                urlImage: 'assets/r1.png',
+                color: Color(0xFFd7fada),
+                urlImage: 'https://i.ibb.co/tCWk6Hn/r1.png',
                 title: "REDUCE",
-                subtitle: 'subtitle'),
+                subtitle:
+                    'Reduce the amount of materials and goods you consume.'),
             buildPage(
-                color: Colors.green.shade100,
-                urlImage: 'assets/r2.png',
+                color: Color(0xFFd7fada),
+                urlImage: 'https://i.ibb.co/Cw1LvCy/r2.png',
                 title: "REUSE",
-                subtitle: 'subtitle'),
+                subtitle:
+                    'Reuse items as much as you can before replacing them.'),
             buildPage(
-                color: Colors.green.shade100,
-                urlImage: 'assets/r3.png',
+                color: Color(0xFFd7fada),
+                urlImage: 'https://i.ibb.co/NC38Vmj/r3.png',
                 title: "RECYCLE",
-                subtitle: 'subtitle'),
+                subtitle: 'Recycle items wherever possible.'),
           ],
         ),
       ),
 /////////////////////////Bottom Sheet////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
-      bottomSheet: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        height: 70,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextButton(
-                onPressed: () => controller.jumpToPage(2), child: Text("Skip")),
-            Center(
-              child: SmoothPageIndicator(
-                controller: controller,
-                count: 3,
-                effect: SwapEffect(
-                    dotColor: Colors.green[200],
-                    activeDotColor: Color(0xFF02b55d)),
-                onDotClicked: (index) => controller.animateToPage(index,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut),
-              ),
+      ///
+
+      bottomSheet: Stack(
+        children: [
+          Container(
+              height: 60, decoration: BoxDecoration(color: Color(0xFFd7fada))),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(80)),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: () => controller.jumpToPage(2),
+                    child: Text("Skip")),
+                Center(
+                  child: SmoothPageIndicator(
+                    controller: controller,
+                    count: 3,
+                    effect: SwapEffect(
+                        dotColor: Colors.green[200],
+                        activeDotColor: Color(0xFF02b55d)),
+                    onDotClicked: (index) => controller.animateToPage(index,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut),
+                  ),
+                ),
+                TextButton(
+                    onPressed: () => controller.nextPage(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut),
+                    child: Text("Next"))
+              ],
             ),
-            TextButton(
-                onPressed: () => controller.nextPage(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut),
-                child: Text("Next"))
-          ],
-        ),
+          ),
+        ],
       ),
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
