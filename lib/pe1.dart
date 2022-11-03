@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -8,6 +10,7 @@ class Page1 extends StatefulWidget {
 
 class _Page1State extends State<Page1> {
   final controller = PageController();
+  bool isLastPage = false;
   @override
   void dispose() {
     controller.dispose();
@@ -18,6 +21,7 @@ class _Page1State extends State<Page1> {
     Color color,
     String urlImage,
     String title,
+    Color colort,
     String subtitle,
   }) =>
       Container(
@@ -36,9 +40,7 @@ class _Page1State extends State<Page1> {
               Text(
                 title,
                 style: TextStyle(
-                    color: Colors.teal.shade700,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold),
+                    color: colort, fontSize: 32, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
               Container(
@@ -57,10 +59,14 @@ class _Page1State extends State<Page1> {
       body: Container(
 //////////////////////// Screens ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
-//testing
 
         child: PageView(
           controller: controller,
+          onPageChanged: (index) {
+            setState(() {
+              isLastPage = index == 3;
+            });
+          },
           children: [
             buildPage(
                 color: Color(0xFFd7fada),
@@ -79,6 +85,12 @@ class _Page1State extends State<Page1> {
                 urlImage: 'https://i.ibb.co/NC38Vmj/r3.png',
                 title: "RECYCLE",
                 subtitle: 'Recycle items wherever possible.'),
+            buildPage(
+                color: Color(0xFF00964c),
+                urlImage: 'https://i.ibb.co/WPrjkny/r4.png',
+                title: "Happy World",
+                colort: Colors.white,
+                subtitle: 'All these efforts for our Happier World.'),
           ],
         ),
       ),
@@ -86,43 +98,64 @@ class _Page1State extends State<Page1> {
 /////////////////////////////////////////////////////////////////////////////////
       ///
 
-      bottomSheet: Stack(
-        children: [
-          Container(
-              height: 60, decoration: BoxDecoration(color: Color(0xFFd7fada))),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(80)),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      bottomSheet: isLastPage
+          ? Stack(
               children: [
+                Container(
+                    height: 80,
+                    decoration: BoxDecoration(color: Color(0xFF00964c))),
                 TextButton(
-                    onPressed: () => controller.jumpToPage(2),
-                    child: Text("Skip")),
-                Center(
-                  child: SmoothPageIndicator(
-                    controller: controller,
-                    count: 3,
-                    effect: SwapEffect(
-                        dotColor: Colors.green[200],
-                        activeDotColor: Color(0xFF02b55d)),
-                    onDotClicked: (index) => controller.animateToPage(index,
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeInOut),
+                  style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80)),
+                      primary: Colors.black,
+                      backgroundColor: Colors.white,
+                      minimumSize: Size.fromHeight(80)),
+                  onPressed: () async {},
+                  child: Text("Get Started", style: TextStyle(fontSize: 20)),
+                ),
+              ],
+            )
+          : Stack(
+              children: [
+                Container(
+                    height: 80,
+                    decoration: BoxDecoration(color: Color(0xFFd7fada))),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(80)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                          onPressed: () => controller.jumpToPage(3),
+                          child: Text("Skip")),
+                      Center(
+                        child: SmoothPageIndicator(
+                          controller: controller,
+                          count: 4,
+                          effect: SwapEffect(
+                              dotColor: Colors.green[200],
+                              activeDotColor: Color(0xFF02b55d)),
+                          onDotClicked: (index) => controller.animateToPage(
+                              index,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInOut),
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () => controller.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInOut),
+                          child: Text("Next"))
+                    ],
                   ),
                 ),
-                TextButton(
-                    onPressed: () => controller.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeInOut),
-                    child: Text("Next"))
               ],
             ),
-          ),
-        ],
-      ),
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
     );
