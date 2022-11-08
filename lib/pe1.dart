@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tripler/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Page1 extends StatefulWidget {
   @override
@@ -18,11 +20,11 @@ class _Page1State extends State<Page1> {
   }
 
   Widget buildPage({
-    Color color,
-    String urlImage,
-    String title,
-    Color colort,
-    String subtitle,
+    required Color color,
+    required String urlImage,
+    required String title,
+    required Color colort,
+    required String subtitle,
   }) =>
       Container(
           color: color,
@@ -58,7 +60,7 @@ class _Page1State extends State<Page1> {
     return Scaffold(
       body: Container(
 //////////////////////// Screens ////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////test
+/////////////////////////////////////////////////////////////////////////////////
 
         child: PageView(
           controller: controller,
@@ -72,24 +74,27 @@ class _Page1State extends State<Page1> {
                 color: Color(0xFFd7fada),
                 urlImage: 'https://i.ibb.co/tCWk6Hn/r1.png',
                 title: "REDUCE",
+                colort: Colors.white,
                 subtitle:
                     'Reduce the amount of materials and goods you consume.'),
             buildPage(
                 color: Color(0xFFd7fada),
                 urlImage: 'https://i.ibb.co/Cw1LvCy/r2.png',
                 title: "REUSE",
+                colort: Colors.black,
                 subtitle:
                     'Reuse items as much as you can before replacing them.'),
             buildPage(
                 color: Color(0xFFd7fada),
                 urlImage: 'https://i.ibb.co/NC38Vmj/r3.png',
                 title: "RECYCLE",
+                colort: Colors.black,
                 subtitle: 'Recycle items wherever possible.'),
             buildPage(
                 color: Color(0xFF00964c),
                 urlImage: 'https://i.ibb.co/WPrjkny/r4.png',
                 title: "Happy World",
-                colort: Colors.white,
+                colort: Colors.black,
                 subtitle: 'All these efforts for our Happier World.'),
           ],
         ),
@@ -110,8 +115,14 @@ class _Page1State extends State<Page1> {
                           borderRadius: BorderRadius.circular(80)),
                       primary: Colors.black,
                       backgroundColor: Colors.white,
-                      minimumSize: Size.fromHeight(80)),
-                  onPressed: () async {},
+                      minimumSize: Size.fromHeight(70)),
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('showHome', true);
+
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => Home()));
+                  },
                   child: Text("Get Started", style: TextStyle(fontSize: 20)),
                 ),
               ],
@@ -132,7 +143,7 @@ class _Page1State extends State<Page1> {
                     children: [
                       TextButton(
                           onPressed: () => controller.jumpToPage(3),
-                          child: Text("Skip")),
+                          child: Text("Skip", style: TextStyle(fontSize: 17))),
                       Center(
                         child: SmoothPageIndicator(
                           controller: controller,
@@ -150,7 +161,7 @@ class _Page1State extends State<Page1> {
                           onPressed: () => controller.nextPage(
                               duration: Duration(milliseconds: 500),
                               curve: Curves.easeInOut),
-                          child: Text("Next"))
+                          child: Text("Next", style: TextStyle(fontSize: 17)))
                     ],
                   ),
                 ),
